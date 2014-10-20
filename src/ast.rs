@@ -27,7 +27,7 @@ pub enum PrimOp {
 #[deriving(Clone, PartialEq, Show)]
 pub enum Expr {
     EAtom(Atom),
-    EFCall(Var, Vec<Atom>),
+    EFCall(u8, Var, Vec<Atom>),
     EPrimOp(PrimOp, Vec<Atom>),
     ELet(Var, Object, Box<Expr>),
     ECase(Box<Expr>, Vec<Alt>)
@@ -35,7 +35,7 @@ pub enum Expr {
 
 #[deriving(Clone, PartialEq, Show)]
 pub enum Alt {
-    AltCons(Vec<Var>, Expr),
+    AltCons(Constructor, Vec<Var>, Expr),
     AltName(Var, Expr)
 }
 
@@ -46,10 +46,16 @@ pub enum Object {
     ObjCon(Constructor, Vec<Atom>),
     ObjThunk(Box<Expr>),
     ObjAddr(u64), // This is an implementation detail.
-    ObjBlackhole
+    ObjBlackhole,
+    Error
 }
 
-pub type Binding = (Var, Object);
+pub enum ValueOrAddr {
+    Value(Atom),
+    Addr(u64)
+}
+
+pub type Binding = (Var, ValueOrAddr);
 
 #[deriving(Clone, PartialEq, Show)]
 pub struct Program(pub Vec<Binding>);
