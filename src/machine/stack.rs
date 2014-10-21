@@ -1,4 +1,4 @@
-trait Stack {
+pub trait Stack {
     fn pop();
     fn push();
     fn inspect_with();

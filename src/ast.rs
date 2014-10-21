@@ -1,4 +1,4 @@
-#[deriving(Clone, PartialEq, Eq, Show, Hash, PartialOrd, Ord)]
+#[deriving(Clone, PartialEq, Eq, Show, Hash)]
 pub struct Name(pub String);
 
 #[deriving(Clone, PartialEq, Eq, Show, Hash)]
@@ -50,18 +50,10 @@ pub enum Object {
     Error
 }
 
-pub enum ValueOrAddr {
-    Value(Atom),
-    Addr(u64)
-}
-
-pub type Binding = (Var, ValueOrAddr);
+pub type Binding = (Var, Object);
 
 #[deriving(Clone, PartialEq, Show)]
 pub struct Program(pub Vec<Binding>);
-
-#[deriving(Clone, PartialEq, Show)]
-pub type Heap = Vec<Object>;
 
 //fn interpret(program: Program) -> Machine {}
 
